@@ -2,11 +2,13 @@ package com.example.springboot_dev.User.Data;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
+@Getter
 public class UserEntity {
 
     @Id
