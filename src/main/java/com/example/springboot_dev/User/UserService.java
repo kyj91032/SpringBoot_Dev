@@ -27,8 +27,8 @@ public class UserService {
         List<UserResponseDTO> userResponseDTOs = userEntities.stream()
                 .map(entity -> {
                     UserResponseDTO dto = new UserResponseDTO();
-                    dto.setId(entity.getId());
-                    dto.setName(entity.getName());
+                    dto.setUid(entity.getUid());
+                    dto.setUname(entity.getUname());
                     dto.setPw(entity.getPw());
                     return dto;
                 })
@@ -37,7 +37,7 @@ public class UserService {
         return userResponseDTOs;
     }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Long uid) {
+        userRepository.deleteById(uid);
     }
 }

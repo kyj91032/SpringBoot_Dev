@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class UserRequestDTO {
-    private String name;
+
+    private String uname;
+
     private String pw;
 
     public UserEntity toEntity(){
         return UserEntity.builder()
-                .name(name)
+                .uname(uname)
                 .pw(pw)
                 .build();
     }

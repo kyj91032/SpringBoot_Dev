@@ -19,12 +19,12 @@ public class UserController {
         userService.UserRegister(new UserRequestDTO(name, pw));
     }
 
-    @GetMapping("/userlist") // Read user
+    @GetMapping("/list") // Read user
     public List<UserResponseDTO> getUserList() {
         return userService.getUserList(); // + 직렬화를 위해서 UserResponseDTO에 기본 생성자와 Getter/Setter 메서드 필요
     }
 
-    @DeleteMapping("/deleteuser/{id}") // Delete user
+    @DeleteMapping("/delete/{id}") // Delete user
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
