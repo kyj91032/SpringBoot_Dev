@@ -24,17 +24,16 @@ public class BoardEntity {
     @Column(name = "boardName", length = 20, nullable = false)
     private String bname;
 
-    @Column(name="content", length = 254, nullable = false)
-    private String content;
+    @Column(name="boardContent", length = 254, nullable = false)
+    private String bcontent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uId")
     private UserEntity user;
 
-    @Builder
-    public BoardEntity(String bname, String content, UserEntity user) {
+    public BoardEntity(String bname, String bcontent, UserEntity user) {
         this.bname = bname;
-        this.content = content;
+        this.bcontent = bcontent;
         this.user = user;
     }
 

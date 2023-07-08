@@ -27,7 +27,7 @@ public class BoardService {
         if(user.isPresent()) {
             BoardEntity board = new BoardEntity(
                     boardRequestDTO.getBname(),
-                    boardRequestDTO.getContent(),
+                    boardRequestDTO.getBcontent(),
                     user.get()
             );
             boardRepository.save(board);
@@ -41,7 +41,7 @@ public class BoardService {
                     BoardResponseDTO dto = new BoardResponseDTO();
                     dto.setBid(entity.getBid());
                     dto.setBname(entity.getBname());
-                    dto.setContent(entity.getContent());
+                    dto.setBcontent(entity.getBcontent());
                     dto.setUid(entity.getUser().getUid());
                     dto.setUname(entity.getUser().getUname());
                     dto.setPw(entity.getUser().getPw());

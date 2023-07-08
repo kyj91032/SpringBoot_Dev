@@ -17,7 +17,7 @@ public class BoardResponseDTO { // 출력 전달 객체 (entity 로부터 만들
 
     private String bname;
 
-    private String content;
+    private String bcontent;
 
     private Long uid;
 

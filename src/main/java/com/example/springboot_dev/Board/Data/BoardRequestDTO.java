@@ -7,13 +7,13 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Data
-public class BoardRequestDTO { // 입력 전달 객체 (entity를 만듦)
+public class BoardRequestDTO { // 입력 전달 객체 (entity 를 만듦)
 
 //    private Long bid; auto increment라 필요 없음
 
     private String bname;
 
-    private String content;
+    private String bcontent;
 
     private Long uid;
 
