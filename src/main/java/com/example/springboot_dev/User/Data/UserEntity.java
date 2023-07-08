@@ -2,6 +2,7 @@ package com.example.springboot_dev.User.Data;
 
 import com.example.springboot_dev.Board.Data.BoardEntity;
 import com.example.springboot_dev.Comment.Data.CommentEntity;
+import com.example.springboot_dev.Recommend.Data.RecommendEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,8 +31,11 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<BoardEntity> boards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "comment", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<CommentEntity> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<RecommendEntity> recommends = new ArrayList<>();
 
     @Builder
     public UserEntity(String uname, String pw) {
