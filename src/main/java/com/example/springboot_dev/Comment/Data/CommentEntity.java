@@ -22,16 +22,11 @@ public class CommentEntity {
     private String ccontent;
 
     @ManyToOne
-    @JoinColumn(name = "uId")
-    private UserEntity user;
-
-    @ManyToOne
     @JoinColumn(name = "bId")
     private BoardEntity board;
 
-    public CommentEntity(String ccontent, UserEntity user, BoardEntity board) {
+    public CommentEntity(String ccontent, BoardEntity board) {
         this.ccontent = ccontent;
-        this.user = user;
         this.board = board;
     }
 

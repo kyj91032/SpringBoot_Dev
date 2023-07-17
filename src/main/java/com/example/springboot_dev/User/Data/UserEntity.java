@@ -32,9 +32,6 @@ public class UserEntity {
     private List<BoardEntity> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<CommentEntity> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<RecommendEntity> recommends = new ArrayList<>();
 
     @Builder

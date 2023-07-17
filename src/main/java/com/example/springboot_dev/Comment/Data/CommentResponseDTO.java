@@ -11,16 +11,4 @@ public class CommentResponseDTO {
 
     private String ccontent;
 
-    private Long uid;
-
-    private String uname;
-
-    private String pw;
-
-    private Long bid;
-
-    private String bname;
-
-    private String bcontent;
-
 }

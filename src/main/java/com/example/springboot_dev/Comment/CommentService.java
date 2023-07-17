@@ -32,7 +32,6 @@ public class CommentService {
         if (user.isPresent() && board.isPresent()) {
             CommentEntity commentEntity = new CommentEntity(
                     commentRequestDTO.getCcontent(),
-                    user.get(),
                     board.get()
             );
             commentRepository.save(commentEntity);
@@ -46,12 +45,6 @@ public class CommentService {
                     CommentResponseDTO dto = new CommentResponseDTO();
                     dto.setCid(entity.getCid());
                     dto.setCcontent(entity.getCcontent());
-                    dto.setUid(entity.getUser().getUid());
-                    dto.setUname(entity.getUser().getUname());
-                    dto.setPw(entity.getUser().getPw());
-                    dto.setBid(entity.getBoard().getBid());
-                    dto.setBname(entity.getBoard().getBname());
-                    dto.setBcontent(entity.getBoard().getBcontent());
                     return dto;
                 })
                 .collect(Collectors.toList());
