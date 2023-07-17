@@ -21,15 +21,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private  final CommentRepository commentRepository;
 
     public void saveComment(CommentRequestDTO commentRequestDTO) {
-        Optional<UserEntity> user = userRepository.findById(commentRequestDTO.getUid());
+
         Optional<BoardEntity> board = boardRepository.findById(commentRequestDTO.getBid());
 
-        if (user.isPresent() && board.isPresent()) {
+        if (board.isPresent()) {
             CommentEntity commentEntity = new CommentEntity(
                     commentRequestDTO.getCcontent(),
                     board.get()

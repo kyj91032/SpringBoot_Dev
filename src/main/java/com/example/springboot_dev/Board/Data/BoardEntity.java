@@ -36,6 +36,7 @@ public class BoardEntity {
     @JoinColumn(name = "uId")
     private UserEntity user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<CommentEntity> comments = new ArrayList<>();
 

@@ -7,8 +7,6 @@ public class CommentRequestDTO {
 
     private String ccontent;
 
-    private Long uid;
-
     private Long bid;
 
 }
