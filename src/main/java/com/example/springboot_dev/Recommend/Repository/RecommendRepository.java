@@ -9,4 +9,5 @@ public interface RecommendRepository extends JpaRepository<RecommendEntity, Reco
     void deleteById(RecommendId recommendId);
 
 
+
 }

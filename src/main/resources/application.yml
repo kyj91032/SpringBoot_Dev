@@ -21,7 +21,12 @@ spring:
     hibernate:
       ddl-auto: create  # Hibernate의 DDL 생성 모드를 create로 설정
     show-sql: true
+    format_sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect  # Hibernate의 데이터베이스 방언 설정
 
+# 파라미터 로그
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace

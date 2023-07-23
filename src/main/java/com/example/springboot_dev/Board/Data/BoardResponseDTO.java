@@ -19,7 +19,7 @@ public class BoardResponseDTO { // 출력 전달 객체 (entity 로부터 만들
     // entity 로부터 리턴할 모든 필드 작성
     private Long bid;
 
-    private String bname;
+    private String title;
 
     private String bcontent;
 

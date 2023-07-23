@@ -8,9 +8,9 @@ import com.example.springboot_dev.Recommend.Data.RecommendRequestDTO;
 import com.example.springboot_dev.Recommend.Repository.RecommendRepository;
 import com.example.springboot_dev.User.Data.UserEntity;
 import com.example.springboot_dev.User.Repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

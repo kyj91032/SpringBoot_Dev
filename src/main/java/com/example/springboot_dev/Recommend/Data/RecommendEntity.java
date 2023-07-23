@@ -23,6 +23,8 @@ public class RecommendEntity {
     @JoinColumn(name = "bId")
     private BoardEntity board;
 
+
+
     public RecommendEntity(UserEntity user, BoardEntity board) {
         this.user = user;
         this.board = board;

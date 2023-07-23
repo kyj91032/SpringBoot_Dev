@@ -19,10 +19,10 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "uId")
+    @Column(name = "user_Id")
     private Long uid;
 
-    @Column(name = "userName", length = 10, nullable = false)
+    @Column(name = "userName", nullable = false, unique = true) // unique 제약조건 추가
     private String uname;
 
     @Column(name = "password", length = 20, nullable = false)

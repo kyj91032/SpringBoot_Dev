@@ -6,11 +6,9 @@ import com.example.springboot_dev.Comment.Data.CommentEntity;
 import com.example.springboot_dev.Comment.Data.CommentRequestDTO;
 import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import com.example.springboot_dev.Comment.Repository.CommentRepository;
-import com.example.springboot_dev.User.Data.UserEntity;
-import com.example.springboot_dev.User.Repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
