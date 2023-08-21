@@ -39,10 +39,11 @@ public class BoardEntity {
     @JoinColumn(name = "uId")
     private UserEntity user;
 
-    @JsonIgnore
+    @JsonIgnore // 순환 참조 방지?
     @OneToMany(mappedBy = "board", orphanRemoval = true) // mappedBy = "부모엔티티"
     private List<CommentEntity> comments = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<RecommendEntity> recommends = new ArrayList<>();
 

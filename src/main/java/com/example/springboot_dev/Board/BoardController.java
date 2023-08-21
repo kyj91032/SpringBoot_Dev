@@ -19,7 +19,7 @@ public class BoardController {
         boardService.saveBoard(boardRequestDTO);
     }
 
-    @GetMapping("/list") // 게시글 전체 보기
+    @GetMapping("/list") // 게시글 리스트 전체 보기
     public List<BoardResponseDTO> getBoardList() {
         return boardService.getBoardList();
     }

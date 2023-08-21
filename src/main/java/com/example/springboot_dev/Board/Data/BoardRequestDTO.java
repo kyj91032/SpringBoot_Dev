@@ -4,8 +4,10 @@ import com.example.springboot_dev.User.Data.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class BoardRequestDTO { // 입력 전달 객체 (entity 를 만듦)
 

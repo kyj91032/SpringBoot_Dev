@@ -1,8 +1,12 @@
 package com.example.springboot_dev.User.Data;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class UserRequestDTO {
 
     private String uname;

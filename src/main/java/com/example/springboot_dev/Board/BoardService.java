@@ -57,7 +57,7 @@ public class BoardService {
     }
 
     public BoardResponseDTO getBoard(Long id) {
-        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
+        Optional<BoardEntity> boardEntity = boardRepository.findByIdWithComments(id);
 
         if(boardEntity.isPresent()) {
             BoardEntity board = boardEntity.get();
@@ -86,6 +86,7 @@ public class BoardService {
         }
         return null;
     }
+
 
 
     public void deleteBoard(Long id) {
