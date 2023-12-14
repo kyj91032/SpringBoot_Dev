@@ -6,21 +6,24 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class BoardRequestDTO { // 입력 전달 객체 (entity 를 만듦)
 
-//    private Long bid; auto increment라 필요 없음
-
     private String title;
 
-    private String bcontent;
+    private String content;
 
-    private Long uid;
+    private String category;
 
-//    private UserEntity user; uid로 userentity를 가져오면 돼서 uid로 대체
+    private LocalDateTime createdAt;
 
+    private LocalDateTime updatedAt;
 
+    private Long uid; // uid로 받고 userEntity로 변환
 
+    // user의 초기화도 해야한다면 toEntity 보다는 service 계층에서 dto를 entity로 변환하는 작업을 해주는 것이 좋다.
 }

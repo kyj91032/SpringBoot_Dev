@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
     // 게시물 단일 조회 fetch join
-    @Query("SELECT DISTINCT b FROM BoardEntity b LEFT JOIN FETCH b.comments WHERE b.bid = :boardId")
-    Optional<BoardEntity> findByIdWithComments(@Param("boardId") Long boardId);
+//    @Query("SELECT DISTINCT b FROM BoardEntity b LEFT JOIN FETCH b.comments WHERE b.bid = :boardId")
+//    Optional<BoardEntity> findByIdWithComments(@Param("boardId") Long boardId);
 
 }

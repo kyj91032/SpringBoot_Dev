@@ -19,35 +19,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional // 생성이므로 readOnly X
-    public Long register(UserRequestDTO userRequestDTO) {
+    public Long signup(UserRequestDTO userRequestDTO) {
         return userRepository.save(userRequestDTO.toEntity()).getUid();
     }
 
-    public UserResponseDTO getUserByName(String name) { // 회원 검색
-        UserEntity userEntity = userRepository.findByUname(name); // Optional을 요구하지 않음
-        if (userEntity != null) {
-            return new UserResponseDTO(userEntity.getUid(), userEntity.getUname(), userEntity.getPw());
-        } else {
-            return null;
-        }
-    }
-
-    public List<UserResponseDTO> getUserList() { // 회원 전체 조회
-        List<UserEntity> userEntities = userRepository.findAll();
-        List<UserResponseDTO> userResponseDTOs = userEntities.stream()
-                .map(entity -> {
-                    UserResponseDTO dto = new UserResponseDTO();
-                    dto.setUid(entity.getUid());
-                    dto.setUname(entity.getUname());
-                    dto.setPw(entity.getPw());
-                    return dto;
-                })
-                .collect(Collectors.toList()); // return List<>
-
-        return userResponseDTOs;
-    }
-
-    public void deleteUser(Long uid) { // 회원 삭제
-        userRepository.deleteById(uid);
-    }
 }

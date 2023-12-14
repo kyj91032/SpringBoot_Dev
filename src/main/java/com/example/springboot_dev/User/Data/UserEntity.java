@@ -1,15 +1,12 @@
 package com.example.springboot_dev.User.Data;
 
 import com.example.springboot_dev.Board.Data.BoardEntity;
-import com.example.springboot_dev.Comment.Data.CommentEntity;
-import com.example.springboot_dev.Recommend.Data.RecommendEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user")
@@ -19,25 +16,27 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_Id")
+    @Column(name = "uid")
     private Long uid;
 
-    @Column(name = "userName", nullable = false, unique = true) // unique 제약조건 추가
-    private String uname;
+    @Column(name = "userName", length = 20, nullable = false, unique = true) // unique 제약조건 추가
+    private String userName;
 
     @Column(name = "password", length = 20, nullable = false)
-    private String pw;
+    private String password;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<BoardEntity> boards = new ArrayList<>();
+    @Column(name = "email", length = 50, nullable = false)
+    private String email;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<RecommendEntity> recommends = new ArrayList<>();
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
     @Builder
-    public UserEntity(String uname, String pw) {
-        this.uname = uname;
-        this.pw = pw;
+    public UserEntity(String userName, String password, String email, LocalDateTime createdAt) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.createdAt = createdAt;
     }
 
 }

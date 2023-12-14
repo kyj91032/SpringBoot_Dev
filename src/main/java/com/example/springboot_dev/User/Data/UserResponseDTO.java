@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -13,8 +15,12 @@ public class UserResponseDTO {
 
     private Long uid;
 
-    private String uname;
+    private String userName;
 
-    private String pw;
+    private String password;
+
+    private String email;
+
+    private LocalDateTime createdAt;
 
 }

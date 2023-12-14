@@ -16,18 +16,26 @@ public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cid")
     private Long cid;
 
-    @Column(name = "commentContent")
-    private String ccontent;
+    @Column(name = "comment", nullable = false)
+    private String comment;
+
+    @Column(name = "created_at", nullable = false)
+    private String createdAt;
+
+    @Column(name = "modified_at", nullable = false)
+    private String modifiedAt;
 
     @ManyToOne
-    @JoinColumn(name = "bId")
+    @JoinColumn(name = "uid") // user의 uid를 참조
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "bid")  // board의 bid를 참조
     private BoardEntity board;
 
-    public CommentEntity(String ccontent, BoardEntity board) {
-        this.ccontent = ccontent;
-        this.board = board;
-    }
+
 
 }

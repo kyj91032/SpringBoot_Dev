@@ -1,19 +1,12 @@
 package com.example.springboot_dev.Board.Data;
 
-import com.example.springboot_dev.Comment.Data.CommentEntity;
-import com.example.springboot_dev.Recommend.Data.RecommendEntity;
 import com.example.springboot_dev.User.Data.UserEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
-import javax.xml.stream.events.Comment;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Table(name = "board")
 @Entity
@@ -23,33 +16,35 @@ public class BoardEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bId")
+    @Column(name = "bid")
     private Long bid;
 
     @Column(name = "title", length = 20, nullable = false)
     private String title;
 
-    @Column(name="boardContent", length = 254, nullable = false)
-    private String bcontent;
+    @Column(name="content", nullable = false)
+    private String content;
 
-    // 자식 엔티티 = N = 연관관계의 주인 = 외래키 가짐 = 부모 엔티티를 조회, 수정, 삭제, 생성 모두 가능.
-    // 부모 엔티티 = 1 = 자식 엔티티를 리스트로 가짐 = 자식 엔티티를 조회만 가능.
+    @Column(name = "category", nullable = false)
+    private String category;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uId")
+    @JoinColumn(name = "uid")
     private UserEntity user;
 
-    @JsonIgnore // 순환 참조 방지?
-    @OneToMany(mappedBy = "board", orphanRemoval = true) // mappedBy = "부모엔티티"
-    private List<CommentEntity> comments = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "board", orphanRemoval = true)
-    private List<RecommendEntity> recommends = new ArrayList<>();
-
-    public BoardEntity(String title, String bcontent, UserEntity user) {
+    @Builder
+    public BoardEntity(String title, String content, String category, LocalDateTime createdAt, LocalDateTime updatedAt, UserEntity user) {
         this.title = title;
-        this.bcontent = bcontent;
+        this.content = content;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.user = user;
     }
 

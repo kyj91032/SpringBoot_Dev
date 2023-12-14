@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,17 +17,18 @@ import java.util.List;
 @Getter
 public class BoardResponseDTO { // 출력 전달 객체 (entity 로부터 만들어짐)
 
-    // entity 로부터 리턴할 모든 필드 작성
     private Long bid;
 
     private String title;
 
-    private String bcontent;
+    private String content;
 
-    private UserResponseDTO userResponseDTO;
+    private String category;
 
-    private List<CommentResponseDTO> comments;
+    private LocalDateTime createdAt;
 
-    private int recommend;
+    private LocalDateTime updatedAt;
+
+    private UserResponseDTO user; // userEntity로 받고 userResponseDTO로 변환
 
 }

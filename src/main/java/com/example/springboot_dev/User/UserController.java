@@ -14,24 +14,17 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register") // 회원가입 (유저 생성)
-    public Long register(String name, String pw) {
-        return userService.register(new UserRequestDTO(name, pw));
+    @PostMapping("/signup") // 회원가입 (유저 생성)
+    public Long signup(@RequestBody UserRequestDTO userRequestDTO) {
+        // @RequestBody: HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할 -> JSON 형태로 전달된 요청의 본문을 자바 객체로 변환
+        // -> Controller에서 DTO를 직접 입력받을 수 있다는 것
+        return userService.signup(userRequestDTO);
     }
 
-    @GetMapping("/find/{name}") // 회원 검색
-    public UserResponseDTO getUserByName(@PathVariable("name") String name) {
-        return userService.getUserByName(name);
-    }
+    // 로그인 후 전체 페이지 /login
 
-    @GetMapping("/list") // 회원 전체 조회
-    public List<UserResponseDTO> getUserList() {
-        return userService.getUserList(); // + 직렬화를 위해서 UserResponseDTO에 기본 생성자와 Getter/Setter 메서드 필요
-    }
 
-    @DeleteMapping("/delete/{id}") // 회원 삭제
-    public void deleteUser(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
-    }
+    // 로그아웃 후 전체 페이지 /logout
+
 
 }
