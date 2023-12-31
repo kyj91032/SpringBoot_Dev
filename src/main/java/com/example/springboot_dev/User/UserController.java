@@ -15,16 +15,16 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup") // 회원가입 (유저 생성)
-    public Long signup(@RequestBody UserRequestDTO userRequestDTO) {
+    public void signup(@RequestBody UserRequestDTO userRequestDTO) {
         // @RequestBody: HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할 -> JSON 형태로 전달된 요청의 본문을 자바 객체로 변환
-        // -> Controller에서 DTO를 직접 입력받을 수 있다는 것
-        return userService.signup(userRequestDTO);
+        // -> Controller에서 입력 데이터를 DTO 객채로 직접 입력받을 수 있음
+        userService.signUp(userRequestDTO);
     }
 
-    // 로그인 후 전체 페이지 /login
-
-
-    // 로그아웃 후 전체 페이지 /logout
+    @PostMapping("/login") // 로그인 (유저 조회)
+    public void login(@RequestBody UserRequestDTO userRequestDTO) {
+        userService.logIn(userRequestDTO);
+    }
 
 
 }

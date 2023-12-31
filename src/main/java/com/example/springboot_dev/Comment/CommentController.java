@@ -13,25 +13,16 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    // 전체 댓글 조회 -> boardService에서 join 하여 조회
+    // 댓글 조회
+//    @GetMapping(value = "/posts/{id}/comments")
 
     // 댓글 등록
-    @PostMapping(value = "/posts/{id}/comments")
-    public void saveComment(@RequestBody CommentRequestDTO commentRequestDTO) {
-        commentService.saveComment(commentRequestDTO);
-    }
+//    @PostMapping(value = "/posts/{id}/comments")
 
     // 댓글 삭제
-    @DeleteMapping(value = "/posts/comments/{id}")
-    public void deleteComment(@PathVariable("id") Long id) {
-        commentService.deleteComment(id);
-    }
+//    @DeleteMapping(value = "/posts/{id}/comments/{id}")
 
     // 댓글 수정
-    @PutMapping(value = "/posts/comments/{id}")
-    public void updateComment(@PathVariable("id") Long id, @RequestBody String comment) {
-        commentService.updateComment(id, comment);
-    }
-
+//    @PutMapping(value = "/posts/{id}/comments/{id}")
 
 }

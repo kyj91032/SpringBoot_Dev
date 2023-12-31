@@ -6,6 +6,8 @@ import com.example.springboot_dev.Comment.Data.CommentEntity;
 import com.example.springboot_dev.Comment.Data.CommentRequestDTO;
 import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import com.example.springboot_dev.Comment.Repository.CommentRepository;
+import com.example.springboot_dev.User.Data.UserEntity;
+import com.example.springboot_dev.User.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,31 +23,27 @@ public class CommentService {
 
     private final BoardRepository boardRepository;
     private  final CommentRepository commentRepository;
+    private final UserRepository userRepository;
 
+    // 댓글 등록 로직
     public void saveComment(CommentRequestDTO commentRequestDTO) {
 
         Optional<BoardEntity> board = boardRepository.findById(commentRequestDTO.getBid());
+        Optional<UserEntity> user = userRepository.findById(commentRequestDTO.getUid());
 
-        if (board.isPresent()) {
-            CommentEntity commentEntity = new CommentEntity(
-                    commentRequestDTO.getCcontent(),
+        if(board.isPresent() && user.isPresent()) {
+            commentRepository.save(new CommentEntity(
+                    commentRequestDTO.getComment(),
+                    commentRequestDTO.getCreatedAt(),
+                    commentRequestDTO.getModifiedAt(),
+                    user.get(),
                     board.get()
-            );
-            commentRepository.save(commentEntity);
+            ));
         }
     }
 
-    public List<CommentResponseDTO> getCommentList() {
-        List<CommentEntity> commentEntities = commentRepository.findAll();
-        List<CommentResponseDTO> commentResponseDTOs = commentEntities.stream()
-                .map(entity -> {
-                    CommentResponseDTO dto = new CommentResponseDTO();
-                    dto.setCid(entity.getCid());
-                    dto.setCcontent(entity.getCcontent());
-                    return dto;
-                })
-                .collect(Collectors.toList());
-        return commentResponseDTOs;
+    public void updateComment(Long id, String comment) {
+        Optional<CommentEntity> commentEntityWrapper = commentRepository.findById(id);
     }
 
     public void deleteComment(Long id) {

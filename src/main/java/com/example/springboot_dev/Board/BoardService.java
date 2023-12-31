@@ -25,6 +25,33 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
+    // 전체 게시글 조회 로직
+    public List<BoardResponseDTO> getPostList() {
+        List<BoardEntity> boardEntities = boardRepository.findAll();
+        // n+1 문제
+        List<BoardResponseDTO> boardResponseDTOS = boardEntities.stream()
+                .map(entity -> {
+                    BoardResponseDTO dto = new BoardResponseDTO();
+                    dto.setBid(entity.getBid());
+                    dto.setTitle(entity.getTitle());
+                    dto.setContent(entity.getContent());
+                    dto.setCategory(entity.getCategory());
+                    dto.setCreatedAt(entity.getCreatedAt());
+                    dto.setUpdatedAt(entity.getUpdatedAt());
+                    dto.setUser(new UserResponseDTO(
+                                    entity.getUser().getUid(),
+                                    entity.getUser().getUserName(),
+                                    entity.getUser().getPassword(),
+                                    entity.getUser().getEmail(),
+                                    entity.getUser().getCreatedAt()
+                            )
+                    );
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return boardResponseDTOS;
+    }
+
     // 게시글 등록 로직
     public void saveBoard(BoardRequestDTO boardRequestDTO) {
         Optional<UserEntity> user = userRepository.findById(boardRequestDTO.getUid()); // uid로 userEntity 찾기
@@ -41,31 +68,11 @@ public class BoardService {
         }
     }
 
+    // 게시글 수정 로직
 
-    // 전체 게시글 조회 로직
-    public List<BoardResponseDTO> getBoardList() {
-        List<BoardEntity> boardEntities = boardRepository.findAll();
-        List<BoardResponseDTO> boardResponseDTOS = boardEntities.stream()
-                .map(entity -> {
-                    BoardResponseDTO dto = new BoardResponseDTO();
-                        dto.setBid(entity.getBid());
-                        dto.setTitle(entity.getTitle());
-                        dto.setContent(entity.getContent());
-                        dto.setCategory(entity.getCategory());
-                        dto.setCreatedAt(entity.getCreatedAt());
-                        dto.setUpdatedAt(entity.getUpdatedAt());
-                        dto.setUser(new UserResponseDTO(
-                                entity.getUser().getUid(),
-                                entity.getUser().getUserName(),
-                                entity.getUser().getPassword(),
-                                entity.getUser().getEmail(),
-                                entity.getUser().getCreatedAt()
-                        )
-                    );
-                    return dto;
-                })
-                .collect(Collectors.toList());
-        return boardResponseDTOS;
+
+    public void deleteBoard(Long id) {
+        boardRepository.deleteById(id);
     }
 
     // 게시글 상세조회 로직 // comment 랑 조인 필요
@@ -99,10 +106,5 @@ public class BoardService {
 //        }
 //        return null;
 //    }
-
-
-    public void deleteBoard(Long id) {
-        boardRepository.deleteById(id);
-    }
 
 }

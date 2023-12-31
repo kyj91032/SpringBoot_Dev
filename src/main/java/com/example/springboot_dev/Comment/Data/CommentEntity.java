@@ -4,8 +4,11 @@ import com.example.springboot_dev.Board.Data.BoardEntity;
 import com.example.springboot_dev.User.Data.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comment")
@@ -23,10 +26,10 @@ public class CommentEntity {
     private String comment;
 
     @Column(name = "created_at", nullable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "modified_at", nullable = false)
-    private String modifiedAt;
+    private LocalDateTime modifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "uid") // user의 uid를 참조
@@ -36,6 +39,14 @@ public class CommentEntity {
     @JoinColumn(name = "bid")  // board의 bid를 참조
     private BoardEntity board;
 
+    @Builder
+    public CommentEntity(String comment, LocalDateTime createdAt, LocalDateTime modifiedAt, UserEntity user, BoardEntity board) {
+        this.comment = comment;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.user = user;
+        this.board = board;
+    }
 
 
 }
