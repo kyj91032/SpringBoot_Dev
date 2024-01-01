@@ -84,40 +84,35 @@ public class BoardService {
         }
     }
 
+    // 게시글 삭제 로직
     public void deletePost(Long id) {
         boardRepository.deleteById(id);
     }
 
-    // 게시글 상세조회 로직 // comment 랑 조인 필요
-//    public BoardResponseDTO getPost(Long id) {
-//        Optional<BoardEntity> boardEntity = boardRepository.findByIdWithComments(id);
-//
-//        if(boardEntity.isPresent()) {
-//            BoardEntity board = boardEntity.get();
-//
-//            List<CommentResponseDTO> commentResponseDTOs = board.getComments().stream().
-//                map(comment -> {
-//                    CommentResponseDTO dto = new CommentResponseDTO();
-//                    dto.setCid(comment.getCid());
-//                    dto.setCcontent(comment.getCcontent());
-//                    return dto;
-//                }).collect(Collectors.toList());
-//
-//            BoardResponseDTO boardResponseDTO = new BoardResponseDTO(
-//                board.getBid(),
-//                board.getTitle(),
-//                board.getBcontent(),
-//                new UserResponseDTO(
-//                        board.getUser().getUid(),
-//                        board.getUser().getUname(),
-//                        board.getUser().getPw()
-//                ),
-//                commentResponseDTOs,0
-////                (int) recommendRepository.countByBid(board.getBid())
-//            );
-//            return boardResponseDTO;
-//        }
-//        return null;
-//    }
-
+    // 게시글 상세조회 로직
+    public BoardResponseDTO getPost(Long id) {
+        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
+        if(boardEntity.isPresent()) {
+            BoardEntity board = boardEntity.get();
+            BoardResponseDTO boardResponseDTO = BoardResponseDTO.builder()
+                    .bid(board.getBid())
+                    .title(board.getTitle())
+                    .content(board.getContent())
+                    .category(board.getCategory())
+                    .createdAt(board.getCreatedAt())
+                    .updatedAt(board.getUpdatedAt())
+                    .user(new UserResponseDTO(
+                                    board.getUser().getUid(),
+                                    board.getUser().getUserName(),
+                                    board.getUser().getPassword(),
+                                    board.getUser().getEmail(),
+                                    board.getUser().getCreatedAt()
+                            )
+                    )
+                    .build();
+            return boardResponseDTO;
+        } else {
+            return null;
+        }
+    }
 }

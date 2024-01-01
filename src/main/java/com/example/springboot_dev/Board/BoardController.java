@@ -34,10 +34,10 @@ public class BoardController {
         boardService.deletePost(id);
     }
 
-//    @GetMapping("/board/posts/{id}") // 게시글 상세조회
-//    public BoardResponseDTO getBoard(@PathVariable("id") Long id) {
-//        return boardService.getBoard(id);
-//    }
+    @GetMapping("/board/posts/{id}") // 게시글 상세조회
+    public BoardResponseDTO getPost(@PathVariable("id") Long id) {
+        return boardService.getPost(id);
+    }
 
 
 }
