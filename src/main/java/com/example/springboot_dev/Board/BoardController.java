@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/board")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -34,7 +33,7 @@ public class BoardController {
         boardService.deletePost(id);
     }
 
-    @GetMapping("/board/posts/{id}") // 게시글 상세조회
+    @GetMapping("/posts/{id}") // 게시글 상세조회
     public BoardResponseDTO getPost(@PathVariable("id") Long id) {
         return boardService.getPost(id);
     }

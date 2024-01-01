@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,19 +27,24 @@ public class CommentService {
     private final UserRepository userRepository;
 
     // 댓글 등록 로직
-    public void saveComment(CommentRequestDTO commentRequestDTO) {
+    public void saveComment(Long uid, Long pid, CommentRequestDTO commentRequestDTO) {
 
-        Optional<BoardEntity> board = boardRepository.findById(commentRequestDTO.getBid());
-        Optional<UserEntity> user = userRepository.findById(commentRequestDTO.getUid());
+        Optional<BoardEntity> boardEntity= boardRepository.findById(pid);
+        Optional<UserEntity> userEntity = userRepository.findById(uid);
 
-        if(board.isPresent() && user.isPresent()) {
-            commentRepository.save(new CommentEntity(
-                    commentRequestDTO.getComment(),
-                    commentRequestDTO.getCreatedAt(),
-                    commentRequestDTO.getModifiedAt(),
-                    user.get(),
-                    board.get()
-            ));
+        if(boardEntity.isPresent() && userEntity.isPresent()) {
+            BoardEntity board = boardEntity.get();
+            UserEntity user = userEntity.get();
+            CommentEntity commentEntity = CommentEntity.builder()
+                    .comment(commentRequestDTO.getComment())
+                    .user(user)
+                    .board(board)
+                    .createdAt(LocalDateTime.now())
+                    .modifiedAt(LocalDateTime.now())
+                    .build();
+            commentRepository.save(commentEntity);
+        } else {
+            System.out.println("댓글 등록 실패");
         }
     }
 

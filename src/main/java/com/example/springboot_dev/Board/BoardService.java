@@ -28,7 +28,6 @@ public class BoardService {
     // 전체 게시글 조회 로직
     public List<BoardResponseDTO> getPostList() {
         List<BoardEntity> boardEntities = boardRepository.findAll();
-        // n+1 문제
         List<BoardResponseDTO> boardResponseDTOS = boardEntities.stream()
                 .map(entity -> {
                     BoardResponseDTO dto = new BoardResponseDTO();

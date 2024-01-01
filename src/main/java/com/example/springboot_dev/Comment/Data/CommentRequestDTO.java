@@ -11,12 +11,7 @@ public class CommentRequestDTO {
 
     private String comment;
 
-    private LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
 
-    private Long uid;
-
-    private Long bid;
 
 }
