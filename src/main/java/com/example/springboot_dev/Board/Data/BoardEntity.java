@@ -3,6 +3,7 @@ package com.example.springboot_dev.Board.Data;
 import com.example.springboot_dev.User.Data.UserEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "board")
 @Entity
 @NoArgsConstructor
-@Getter
+@Data
 public class BoardEntity {
 
     @Id

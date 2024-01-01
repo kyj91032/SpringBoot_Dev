@@ -53,7 +53,7 @@ public class BoardService {
     }
 
     // 게시글 등록 로직
-    public void saveBoard(BoardRequestDTO boardRequestDTO) {
+    public void savePost(BoardRequestDTO boardRequestDTO) {
         Optional<UserEntity> user = userRepository.findById(boardRequestDTO.getUid()); // uid로 userEntity 찾기
         if(user.isPresent()) { // findById는 Optional로 반환하기 때문에 isPresent()로 null 체크
             BoardEntity board = BoardEntity.builder() // toEntity 가 아닌 service에서 직접 만듦
@@ -69,14 +69,27 @@ public class BoardService {
     }
 
     // 게시글 수정 로직
+    public void updatePost(Long id, String updatedContent) {
+        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
+        if(boardEntity.isPresent()) {
+            BoardEntity board = boardEntity.get();
+            board.setContent(updatedContent);
+            board.setUpdatedAt(LocalDateTime.now());
+            boardRepository.save(board);
+            // JPA의 save 메소드는 엔터티의 식별자(ID)가 이미 존재하는 경우 해당 엔터티를 업데이트하고,
+            // 그렇지 않은 경우에는 새로운 엔터티를 저장
 
+            // 엔티티 클래스에서 setter 사용은 지양해야 함
+            // 수정 필요
+        }
+    }
 
-    public void deleteBoard(Long id) {
+    public void deletePost(Long id) {
         boardRepository.deleteById(id);
     }
 
     // 게시글 상세조회 로직 // comment 랑 조인 필요
-//    public BoardResponseDTO getBoard(Long id) {
+//    public BoardResponseDTO getPost(Long id) {
 //        Optional<BoardEntity> boardEntity = boardRepository.findByIdWithComments(id);
 //
 //        if(boardEntity.isPresent()) {
