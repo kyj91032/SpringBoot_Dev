@@ -48,8 +48,16 @@ public class CommentService {
         }
     }
 
-    public void updateComment(Long id, String comment) {
-        Optional<CommentEntity> commentEntityWrapper = commentRepository.findById(id);
+    public void updateComment(Long id, CommentRequestDTO commentRequestDTO) {
+        Optional<CommentEntity> commentEntity = commentRepository.findById(id);
+        if(commentEntity.isPresent()) {
+            CommentEntity comment = commentEntity.get();
+            comment.setComment(commentRequestDTO.getComment());
+            // entity 클래스에 setter를 사용하는 것은 부적합 -> 수정 필요
+            commentRepository.save(comment);
+        } else {
+            System.out.println("댓글 수정 실패");
+        }
     }
 
     public void deleteComment(Long id) {
