@@ -4,7 +4,6 @@ import com.example.springboot_dev.Board.Data.BoardEntity;
 import com.example.springboot_dev.Board.Data.BoardRequestDTO;
 import com.example.springboot_dev.Board.Data.BoardResponseDTO;
 import com.example.springboot_dev.Board.Repository.BoardRepository;
-import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import com.example.springboot_dev.User.Data.UserEntity;
 import com.example.springboot_dev.User.Data.UserResponseDTO;
 import com.example.springboot_dev.User.Repository.UserRepository;
