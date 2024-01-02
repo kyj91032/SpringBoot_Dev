@@ -21,9 +21,9 @@ spring:
     hibernate:
       ddl-auto: update  # Hibernate의 DDL 생성 모드를 설정
     show-sql: true # Hibernate가 실행한 SQL을 출력
-    format_sql: true # Hibernate가 실행한 SQL을 정렬해서 출력
     properties:
       hibernate:
+        format_sql: true # Hibernate가 실행한 SQL을 정렬해서 출력
         dialect: org.hibernate.dialect.MySQL8Dialect  # Hibernate의 데이터베이스 방언 설정
 
 # 파라미터 로그

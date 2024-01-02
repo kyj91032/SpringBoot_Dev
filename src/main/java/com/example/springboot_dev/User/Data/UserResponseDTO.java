@@ -1,13 +1,9 @@
 package com.example.springboot_dev.User.Data;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -23,4 +19,12 @@ public class UserResponseDTO {
 
     private LocalDateTime createdAt;
 
+    @Builder
+    public UserResponseDTO(Long uid, String userName, String password, String email, LocalDateTime createdAt) {
+        this.uid = uid;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
 }

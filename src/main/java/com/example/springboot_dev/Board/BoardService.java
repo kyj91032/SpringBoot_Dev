@@ -29,21 +29,22 @@ public class BoardService {
         List<BoardEntity> boardEntities = boardRepository.findAll();
         List<BoardResponseDTO> boardResponseDTOS = boardEntities.stream()
                 .map(entity -> {
-                    BoardResponseDTO dto = new BoardResponseDTO();
-                    dto.setBid(entity.getBid());
-                    dto.setTitle(entity.getTitle());
-                    dto.setContent(entity.getContent());
-                    dto.setCategory(entity.getCategory());
-                    dto.setCreatedAt(entity.getCreatedAt());
-                    dto.setUpdatedAt(entity.getUpdatedAt());
-                    dto.setUser(new UserResponseDTO(
-                                    entity.getUser().getUid(),
-                                    entity.getUser().getUserName(),
-                                    entity.getUser().getPassword(),
-                                    entity.getUser().getEmail(),
-                                    entity.getUser().getCreatedAt()
+                    BoardResponseDTO dto = BoardResponseDTO.builder()
+                            .bid(entity.getBid())
+                            .title(entity.getTitle())
+                            .content(entity.getContent())
+                            .category(entity.getCategory())
+                            .createdAt(entity.getCreatedAt())
+                            .updatedAt(entity.getUpdatedAt())
+                            .user(UserResponseDTO.builder()
+                                    .uid(entity.getUser().getUid())
+                                    .userName(entity.getUser().getUserName())
+                                    .password(entity.getUser().getPassword())
+                                    .email(entity.getUser().getEmail())
+                                    .createdAt(entity.getUser().getCreatedAt())
+                                    .build()
                             )
-                    );
+                            .build();
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -54,7 +55,7 @@ public class BoardService {
     public void savePost(BoardRequestDTO boardRequestDTO) {
         Optional<UserEntity> user = userRepository.findById(boardRequestDTO.getUid()); // uid로 userEntity 찾기
         if(user.isPresent()) { // findById는 Optional로 반환하기 때문에 isPresent()로 null 체크
-            BoardEntity board = BoardEntity.builder() // toEntity 가 아닌 service에서 직접 만듦
+            BoardEntity board = BoardEntity.builder()
                     .title(boardRequestDTO.getTitle())
                     .content(boardRequestDTO.getContent())
                     .category(boardRequestDTO.getCategory())
@@ -63,6 +64,8 @@ public class BoardService {
                     .user(user.get())
                     .build();
             boardRepository.save(board);
+        } else {
+            System.out.println("해당 유저가 존재하지 않습니다.");
         }
     }
 
