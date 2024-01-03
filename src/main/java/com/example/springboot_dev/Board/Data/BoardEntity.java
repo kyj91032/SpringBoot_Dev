@@ -48,4 +48,9 @@ public class BoardEntity {
         this.user = user;
     }
 
+    public void update(String content) {
+        this.content = content;
+        this.updatedAt = LocalDateTime.now();
+    }
+
 }

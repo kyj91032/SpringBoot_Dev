@@ -1,5 +1,7 @@
 package com.example.springboot_dev.User;
 
+import com.example.springboot_dev.Board.Data.BoardResponseDTO;
+import com.example.springboot_dev.User.Data.UserPostCountDTO;
 import com.example.springboot_dev.User.Data.UserRequestDTO;
 import com.example.springboot_dev.User.Data.UserResponseDTO;
 import com.example.springboot_dev.User.Data.UserSignUpDTO;
@@ -25,6 +27,11 @@ public class UserController {
     @GetMapping("/login") // 로그인 (유저 조회)
     public void login(String email, String password) {
         userService.logIn(email, password);
+    }
+
+    @GetMapping("/posts/count") // 모든 유저의 게시글 개수 조회
+    public List<UserPostCountDTO> getPostCount() {
+        return userService.getPostCount();
     }
 
 }

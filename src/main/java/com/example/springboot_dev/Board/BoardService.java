@@ -48,6 +48,12 @@ public class BoardService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+
+        // 예를 들어 boardEntities에 BoardEntity가 3개가 들어있고 uid 는 2개라면,
+        // 처음에 boardEntity 리스트를 가져오는 쿼리를 1회 실행하고
+        // 그 다음에 userEntity를 가져오는 쿼리를 2회 실행하게 됨
+        // 이미 조회한 userEntity는 1차 캐시에 저장되어 있기 때문
+
         return boardResponseDTOS;
     }
 
@@ -74,14 +80,12 @@ public class BoardService {
         Optional<BoardEntity> boardEntity = boardRepository.findById(id);
         if(boardEntity.isPresent()) {
             BoardEntity board = boardEntity.get();
-            board.setContent(updatedContent);
-            board.setUpdatedAt(LocalDateTime.now());
+            board.update(updatedContent);
+            // 엔티티 클래스에서 setter 사용은 지양하는 것이 좋음 -> entity에 update 메소드를 만들어서 사용
+
             boardRepository.save(board);
             // JPA의 save 메소드는 엔터티의 식별자(ID)가 이미 존재하는 경우 해당 엔터티를 업데이트하고,
             // 그렇지 않은 경우에는 새로운 엔터티를 저장
-
-            // 엔티티 클래스에서 setter 사용은 지양해야 함
-            // 수정 필요
         }
     }
 
@@ -95,7 +99,7 @@ public class BoardService {
         Optional<BoardEntity> boardEntity = boardRepository.findById(id);
         if(boardEntity.isPresent()) {
             BoardEntity board = boardEntity.get();
-            BoardResponseDTO boardResponseDTO = BoardResponseDTO.builder()
+            return BoardResponseDTO.builder()
                     .bid(board.getBid())
                     .title(board.getTitle())
                     .content(board.getContent())
@@ -111,9 +115,10 @@ public class BoardService {
                             )
                     )
                     .build();
-            return boardResponseDTO;
         } else {
             return null;
         }
     }
+
+
 }

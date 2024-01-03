@@ -2,15 +2,18 @@ package com.example.springboot_dev.User.Data;
 
 import com.example.springboot_dev.Board.Data.BoardEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class UserEntity {
 
@@ -30,6 +33,9 @@ public class UserEntity {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<BoardEntity> boardList;
 
     @Builder
     public UserEntity(String userName, String password, String email, LocalDateTime createdAt) {
