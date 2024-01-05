@@ -29,11 +29,11 @@ public class CommentEntity {
     @Column(name = "modified_at", nullable = false)
     private LocalDateTime modifiedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid") // user의 uid를 참조
     private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bid")  // board의 bid를 참조
     private BoardEntity board;
 
@@ -44,6 +44,11 @@ public class CommentEntity {
         this.modifiedAt = modifiedAt;
         this.user = user;
         this.board = board;
+    }
+
+    public void update(String comment) {
+        this.comment = comment;
+        this.modifiedAt = LocalDateTime.now();
     }
 
 

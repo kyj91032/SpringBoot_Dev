@@ -9,9 +9,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentRequestDTO {
 
+    private Long uid;
+
+    private Long bid;
+
     private String comment;
-
-
-
 
 }

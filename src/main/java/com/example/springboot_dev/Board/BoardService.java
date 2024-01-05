@@ -3,7 +3,10 @@ package com.example.springboot_dev.Board;
 import com.example.springboot_dev.Board.Data.BoardEntity;
 import com.example.springboot_dev.Board.Data.BoardRequestDTO;
 import com.example.springboot_dev.Board.Data.BoardResponseDTO;
+import com.example.springboot_dev.Board.Data.PostWithCommentDTO;
 import com.example.springboot_dev.Board.Repository.BoardRepository;
+import com.example.springboot_dev.Comment.Data.CommentEntity;
+import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import com.example.springboot_dev.User.Data.UserEntity;
 import com.example.springboot_dev.User.Data.UserResponseDTO;
 import com.example.springboot_dev.User.Repository.UserRepository;
@@ -82,7 +85,6 @@ public class BoardService {
             BoardEntity board = boardEntity.get();
             board.update(updatedContent);
             // 엔티티 클래스에서 setter 사용은 지양하는 것이 좋음 -> entity에 update 메소드를 만들어서 사용
-
             boardRepository.save(board);
             // JPA의 save 메소드는 엔터티의 식별자(ID)가 이미 존재하는 경우 해당 엔터티를 업데이트하고,
             // 그렇지 않은 경우에는 새로운 엔터티를 저장
@@ -94,31 +96,37 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-    // 게시글 상세조회 로직
-    public BoardResponseDTO getPost(Long id) {
-        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
-        if(boardEntity.isPresent()) {
-            BoardEntity board = boardEntity.get();
-            return BoardResponseDTO.builder()
-                    .bid(board.getBid())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .category(board.getCategory())
-                    .createdAt(board.getCreatedAt())
-                    .updatedAt(board.getUpdatedAt())
-                    .user(new UserResponseDTO(
-                                    board.getUser().getUid(),
-                                    board.getUser().getUserName(),
-                                    board.getUser().getPassword(),
-                                    board.getUser().getEmail(),
-                                    board.getUser().getCreatedAt()
-                            )
-                    )
-                    .build();
-        } else {
-            return null;
-        }
+    // 게시글 상세조회 로직 + 해당 게시글의 댓글 리스트 조회
+    public PostWithCommentDTO getPost(Long id) {
+        BoardEntity boardEntity = boardRepository.findByBidWithCommentList(id);
+        // 이 경우는 findById를 해도 n+1 문제가 발생하지 않음 (findById 해도 쿼리 +1번 실행)
+        // OneToMany 관계에서 findAll -> findAll 같은 경우에 쿼리가 n번 추가되는 n+1 문제가 발생함
+
+        PostWithCommentDTO dto = PostWithCommentDTO.builder()
+                .bid(boardEntity.getBid()) // 게시글 정보
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .category(boardEntity.getCategory())
+                .createdAt(boardEntity.getCreatedAt())
+                .updatedAt(boardEntity.getUpdatedAt())
+                .user(UserResponseDTO.builder() // 게시글 작성자 정보
+                        .uid(boardEntity.getUser().getUid())
+                        .userName(boardEntity.getUser().getUserName())
+                        .password(boardEntity.getUser().getPassword())
+                        .email(boardEntity.getUser().getEmail())
+                        .createdAt(boardEntity.getUser().getCreatedAt())
+                        .build()
+                )
+                .commentList(boardEntity.getCommentList().stream() // 게시글의 댓글 리스트
+                        .map(commentEntity -> CommentResponseDTO.builder()
+                                .cid(commentEntity.getCid())
+                                .comment(commentEntity.getComment())
+                                .createdAt(commentEntity.getCreatedAt())
+                                .modifiedAt(commentEntity.getModifiedAt())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
+
+        return dto;
     }
-
-
 }

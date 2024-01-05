@@ -1,9 +1,6 @@
 package com.example.springboot_dev.User;
 
-import com.example.springboot_dev.Board.Data.BoardResponseDTO;
 import com.example.springboot_dev.User.Data.UserPostCountDTO;
-import com.example.springboot_dev.User.Data.UserRequestDTO;
-import com.example.springboot_dev.User.Data.UserResponseDTO;
 import com.example.springboot_dev.User.Data.UserSignUpDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

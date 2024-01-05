@@ -2,6 +2,8 @@ package com.example.springboot_dev.Board;
 
 import com.example.springboot_dev.Board.Data.BoardRequestDTO;
 import com.example.springboot_dev.Board.Data.BoardResponseDTO;
+import com.example.springboot_dev.Board.Data.PostWithCommentDTO;
+import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +36,7 @@ public class BoardController {
     }
 
     @GetMapping("/posts/{id}") // 게시글 상세조회
-    public BoardResponseDTO getPost(@PathVariable("id") Long id) {
+    public PostWithCommentDTO getPost(@PathVariable("id") Long id) {
         return boardService.getPost(id);
     }
 

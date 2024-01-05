@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findByEmail(String email);
 
-    @Query("SELECT u FROM UserEntity u JOIN FETCH u.boardList")
+    @Query("SELECT u FROM UserEntity u LEFT JOIN FETCH u.boardList")
     List<UserEntity> findAllWithBoardList();
 }

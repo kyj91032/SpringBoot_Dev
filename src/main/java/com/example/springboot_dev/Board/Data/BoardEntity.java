@@ -1,17 +1,20 @@
 package com.example.springboot_dev.Board.Data;
 
+import com.example.springboot_dev.Comment.Data.CommentEntity;
 import com.example.springboot_dev.User.Data.UserEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "board")
 @Entity
 @NoArgsConstructor
-@Data
+@Getter
 public class BoardEntity {
 
     @Id
@@ -37,6 +40,9 @@ public class BoardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<CommentEntity> commentList;
 
     @Builder
     public BoardEntity(String title, String content, String category, LocalDateTime createdAt, LocalDateTime updatedAt, UserEntity user) {

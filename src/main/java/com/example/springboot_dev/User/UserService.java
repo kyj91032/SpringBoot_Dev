@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-
 
     // 회원가입 로직
     @Transactional // 생성이므로 readOnly = false(기본)로 설정
@@ -48,9 +45,9 @@ public class UserService {
     // 유저의 게시글 개수 조회 로직
     public List<UserPostCountDTO> getPostCount() {
 //        List<UserEntity> userEntities = userRepository.findAll();
-        // 연관된 엔티티를 조회하지 않고 유저 리스트만 조회하는 쿼리를 실행.
+        // 연관된 엔티티를 조회하지 않고 유저 리스트만 조회하는 쿼리를 실행
         // oneToMany의 패치 전략이 LAZY 이든 EAGER 이든 JPQL은 연관관계를 고려하지 않고 대상 엔티티만을 기준으로 쿼리를 실행하기 때문에
-        // n+1 문제 발생
+        // n+1 문제 발생 (n번의 추가 쿼리 실행)
         // 매 유저마다 게시글 리스트를 조회하는 쿼리가 실행됨
 
         List<UserEntity> userEntities = userRepository.findAllWithBoardList();

@@ -27,10 +27,10 @@ public class CommentService {
     private final UserRepository userRepository;
 
     // 댓글 등록 로직
-    public void saveComment(Long uid, Long pid, CommentRequestDTO commentRequestDTO) {
+    public void saveComment(CommentRequestDTO commentRequestDTO) {
 
-        Optional<BoardEntity> boardEntity= boardRepository.findById(pid);
-        Optional<UserEntity> userEntity = userRepository.findById(uid);
+        Optional<BoardEntity> boardEntity= boardRepository.findById(commentRequestDTO.getBid());
+        Optional<UserEntity> userEntity = userRepository.findById(commentRequestDTO.getUid());
 
         if(boardEntity.isPresent() && userEntity.isPresent()) {
             BoardEntity board = boardEntity.get();
@@ -48,12 +48,12 @@ public class CommentService {
         }
     }
 
-    public void updateComment(Long id, CommentRequestDTO commentRequestDTO) {
+    // 댓글 수정 로직
+    public void updateComment(Long id, String updatedComment) {
         Optional<CommentEntity> commentEntity = commentRepository.findById(id);
         if(commentEntity.isPresent()) {
             CommentEntity comment = commentEntity.get();
-            comment.setComment(commentRequestDTO.getComment());
-            // entity 클래스에 setter를 사용하는 것은 부적합 -> 수정 필요
+            comment.update(updatedComment);
             commentRepository.save(comment);
         } else {
             System.out.println("댓글 수정 실패");
