@@ -25,18 +25,17 @@ dependencies {
 
 	// QueryDSL 설정
 	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	// Q클래스 생성을 위한 annotationProcessor 설정
+	// QClass란 엔티티 클래스 속성과 구조를 설명해주는 메타데이터 => Type Safe 하게 쿼리 조건 설정 가능
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 
 	compileOnly 'org.projectlombok:lombok'
@@ -52,13 +51,19 @@ dependencies {
 
 }
 
-// Querydsl 설정부
-def generatedDir = 'src/main/generated'
-
-clean {
-	delete file (generatedDir)
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+
+// Querydsl 설정부
+def generatedDir = 'src/main/generated'
+clean {
+	delete file (generatedDir)
+}
+tasks.withType(JavaCompile) {
+	options.generatedSourceOutputDirectory = file(generatedDir)
+}
+
+
