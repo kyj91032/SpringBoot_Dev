@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, UserCus
 
     @Query("SELECT u FROM UserEntity u LEFT JOIN FETCH u.boardList")
     List<UserEntity> findAllWithBoardList();
+
+
+
 }

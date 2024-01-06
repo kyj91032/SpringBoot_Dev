@@ -40,5 +40,10 @@ public class BoardController {
         return boardService.getPost(id);
     }
 
+    @GetMapping("/posts/category/{category}") // 카테고리별 게시글 조회
+    public List<BoardResponseDTO> getPostListByCategory(@PathVariable("category") String category) {
+        return boardService.getPostListByCategory(category);
+    }
+
 
 }

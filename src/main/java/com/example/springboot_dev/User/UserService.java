@@ -42,17 +42,16 @@ public class UserService {
         }
     }
 
-    // 유저의 게시글 개수 조회 로직
+    // 모든 유저의 게시글 개수 조회 로직
     public List<UserPostCountDTO> getPostCount() {
 //        List<UserEntity> userEntities = userRepository.findAll();
         // 연관된 엔티티를 조회하지 않고 유저 리스트만 조회하는 쿼리를 실행
         // oneToMany의 패치 전략이 LAZY 이든 EAGER 이든 JPQL은 연관관계를 고려하지 않고 대상 엔티티만을 기준으로 쿼리를 실행하기 때문에
-        // n+1 문제 발생 (n번의 추가 쿼리 실행)
+        // 추가 쿼리 발생 문제
         // 매 유저마다 게시글 리스트를 조회하는 쿼리가 실행됨
 
         List<UserEntity> userEntities = userRepository.findAllWithBoardList();
-        // n+1 문제 해결
-        // 연관된 엔티티까지 한번에 조회하는 쿼리를 실행하도록 해서 1차 캐시에 올림
+        // 연관된 엔티티까지 한번에 조회하는 쿼리를 실행하도록 해서 1차 캐시에 올림 (JPQL의 fetch join 사용)
 
         return userEntities.stream()
                 .map(userEntity -> UserPostCountDTO.builder()

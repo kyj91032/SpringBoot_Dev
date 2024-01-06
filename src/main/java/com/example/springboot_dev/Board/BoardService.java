@@ -5,7 +5,6 @@ import com.example.springboot_dev.Board.Data.BoardRequestDTO;
 import com.example.springboot_dev.Board.Data.BoardResponseDTO;
 import com.example.springboot_dev.Board.Data.PostWithCommentDTO;
 import com.example.springboot_dev.Board.Repository.BoardRepository;
-import com.example.springboot_dev.Comment.Data.CommentEntity;
 import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import com.example.springboot_dev.User.Data.UserEntity;
 import com.example.springboot_dev.User.Data.UserResponseDTO;
@@ -99,8 +98,7 @@ public class BoardService {
     // 게시글 상세조회 로직 + 해당 게시글의 댓글 리스트 조회
     public PostWithCommentDTO getPost(Long id) {
         BoardEntity boardEntity = boardRepository.findByBidWithCommentList(id);
-        // 이 경우는 findById를 해도 n+1 문제가 발생하지 않음 (findById 해도 쿼리 +1번 실행)
-        // OneToMany 관계에서 findAll -> findAll 같은 경우에 쿼리가 n번 추가되는 n+1 문제가 발생함
+        // 이 경우는 findById를 해도 n+1 문제는 발생하지 않음 (findById 해도 쿼리 +1번 실행)
 
         PostWithCommentDTO dto = PostWithCommentDTO.builder()
                 .bid(boardEntity.getBid()) // 게시글 정보
@@ -128,5 +126,33 @@ public class BoardService {
                 .build();
 
         return dto;
+    }
+
+    // 카테고리별 게시글 조회 로직
+    public List<BoardResponseDTO> getPostListByCategory(String category) {
+        List<BoardEntity> boardEntities = boardRepository.getPostListByCategory(category);
+        List<BoardResponseDTO> boardResponseDTOS = boardEntities.stream()
+                .map(entity -> {
+                    BoardResponseDTO dto = BoardResponseDTO.builder()
+                            .bid(entity.getBid())
+                            .title(entity.getTitle())
+                            .content(entity.getContent())
+                            .category(entity.getCategory())
+                            .createdAt(entity.getCreatedAt())
+                            .updatedAt(entity.getUpdatedAt())
+                            .user(UserResponseDTO.builder()
+                                    .uid(entity.getUser().getUid())
+                                    .userName(entity.getUser().getUserName())
+                                    .password(entity.getUser().getPassword())
+                                    .email(entity.getUser().getEmail())
+                                    .createdAt(entity.getUser().getCreatedAt())
+                                    .build()
+                            )
+                            .build();
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return boardResponseDTOS;
     }
 }
