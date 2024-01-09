@@ -30,25 +30,9 @@ public class BoardService {
     public List<BoardResponseDTO> getPostList() {
         List<BoardEntity> boardEntities = boardRepository.findAll();
         List<BoardResponseDTO> boardResponseDTOS = boardEntities.stream()
-                .map(entity -> {
-                    BoardResponseDTO dto = BoardResponseDTO.builder()
-                            .bid(entity.getBid())
-                            .title(entity.getTitle())
-                            .content(entity.getContent())
-                            .category(entity.getCategory())
-                            .createdAt(entity.getCreatedAt())
-                            .updatedAt(entity.getUpdatedAt())
-                            .user(UserResponseDTO.builder()
-                                    .uid(entity.getUser().getUid())
-                                    .userName(entity.getUser().getUserName())
-                                    .password(entity.getUser().getPassword())
-                                    .email(entity.getUser().getEmail())
-                                    .createdAt(entity.getUser().getCreatedAt())
-                                    .build()
-                            )
-                            .build();
-                    return dto;
-                })
+                .map(BoardEntity::from)
+                // .map(entity -> BoardResponseDTO.from(entity))
+                // 위의 두 줄은 같은 코드
                 .collect(Collectors.toList());
 
         // 예를 들어 boardEntities에 BoardEntity가 3개가 들어있고 uid 는 2개라면,
@@ -87,6 +71,8 @@ public class BoardService {
             boardRepository.save(board);
             // JPA의 save 메소드는 엔터티의 식별자(ID)가 이미 존재하는 경우 해당 엔터티를 업데이트하고,
             // 그렇지 않은 경우에는 새로운 엔터티를 저장
+        } else {
+            System.out.println("해당 게시글이 존재하지 않습니다.");
         }
     }
 

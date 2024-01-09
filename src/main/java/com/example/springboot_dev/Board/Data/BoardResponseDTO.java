@@ -28,7 +28,8 @@ public class BoardResponseDTO { // 출력 전달 객체 (entity 로부터 만들
     private UserResponseDTO user; // userEntity로 받고 userResponseDTO로 변환
 
     @Builder
-    public BoardResponseDTO(Long bid, String title, String content, String category, LocalDateTime createdAt, LocalDateTime updatedAt, UserResponseDTO user) {
+    public BoardResponseDTO(Long bid, String title, String content, String category,
+                            LocalDateTime createdAt, LocalDateTime updatedAt, UserResponseDTO user) {
         this.bid = bid;
         this.title = title;
         this.content = content;

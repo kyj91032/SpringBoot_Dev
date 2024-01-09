@@ -1,4 +1,4 @@
-package com.example.springboot_dev.config;
+package com.example.springboot_dev.Config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

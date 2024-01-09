@@ -2,6 +2,7 @@ package com.example.springboot_dev.Board.Data;
 
 import com.example.springboot_dev.Comment.Data.CommentEntity;
 import com.example.springboot_dev.User.Data.UserEntity;
+import com.example.springboot_dev.User.Data.UserResponseDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -58,5 +59,25 @@ public class BoardEntity {
         this.content = content;
         this.updatedAt = LocalDateTime.now();
     }
+
+    // BoardEntity를 BoardResponseDTO로 변환
+    public static BoardResponseDTO from(BoardEntity entity) {
+        return BoardResponseDTO.builder()
+                .bid(entity.getBid())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .category(entity.getCategory())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .user(UserResponseDTO.builder()
+                        .uid(entity.getUser().getUid())
+                        .userName(entity.getUser().getUserName())
+                        .password(entity.getUser().getPassword())
+                        .email(entity.getUser().getEmail())
+                        .createdAt(entity.getUser().getCreatedAt())
+                        .build())
+                .build();
+    }
+
 
 }
