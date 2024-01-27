@@ -3,21 +3,30 @@ package com.example.springboot_dev.Board;
 import com.example.springboot_dev.Board.Data.BoardRequestDTO;
 import com.example.springboot_dev.Board.Data.BoardResponseDTO;
 import com.example.springboot_dev.Board.Data.PostWithCommentDTO;
-import com.example.springboot_dev.Comment.Data.CommentResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
+// Thymeleaf는 템플릿(뷰)를 반환하기 때문에 @RestController가 아닌 @Controller를 사용한다(@ResponseBody를 뺀다)
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/posts") // 전체 게시글 조회
-    public List<BoardResponseDTO> getPostList() {
-        return boardService.getPostList();
+//    @GetMapping("/posts") // 전체 게시글 조회
+//    public List<BoardResponseDTO> getPostList() {
+//        return boardService.getPostList();
+//    }
+
+    @GetMapping("/posts")
+    public String getPostList(Model model) { // 전체 게시글 조회 - Thymeleaf
+        List<BoardResponseDTO> postList = boardService.getPostList();
+        model.addAttribute("postList", postList);
+        return "post";
     }
 
     @PostMapping("/posts") // 게시글 등록
@@ -44,6 +53,5 @@ public class BoardController {
     public List<BoardResponseDTO> getPostListByCategory(@PathVariable("category") String category) {
         return boardService.getPostListByCategory(category);
     }
-
 
 }

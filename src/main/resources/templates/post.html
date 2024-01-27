@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>게시글 목록</title>
+</head>
+<body>
+<h1>게시글 목록</h1>
+<div th:each="post : ${postList}">
+    <span>번호: <span th:text="${post.bid}"></span></span><br/>
+    <span>제목: <a th:href="@{'/posts/' + ${post.bid}}" th:text="${post.title}"></a></span><br/>
+    <span>내용: <span th:text="${post.content}"></span></span><br/>
+    <span>카테고리: <span th:text="${post.category}"></span></span><br/>
+    <span>작성자: <span th:text="${post.user.userName}"></span></span><br/>
+    <span>작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></span></span><br/>
+    <span>수정일: <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}"></span></span><br/>
+</div>
+</body>
+</html>

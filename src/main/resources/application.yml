@@ -6,6 +6,12 @@ server:
 
 # 데이터베이스 설정
 spring:
+  thymeleaf:
+    prefix: classpath:/templates/ # Thymeleaf가 읽어들일 파일 경로
+    suffix: .html  # Thymeleaf가 읽어들일 파일 확장자
+    check-template-location: true  # 템플릿 파일의 존재 여부를 확인할지 여부
+    mode: HTML  # HTML5의 HTML을 사용한다는 의미
+    cache: false # 템플릿 파일의 변경 여부를 확인할지 여부
   mvc:
     path match:
       matching-strategy: ant_path_matcher
